@@ -1,0 +1,37 @@
+company: Roadie
+title: Senior Software Engineer
+subtitle: Sender / Geo Team
+location: Atlanta, GA
+start: 2022-09
+end: 2024-05
+max_bullets: 5
+
+bullets:
+  - text: >-
+      Built a pipeline ingesting Kafka messages and persisting them to AWS
+      OpenSearch.
+    tags: [backend, data]
+    priority: 1
+
+  - text: >-
+      Replaced a legacy tracking API with Benthos, an off-the-shelf Go stream
+      processor, cutting the surface area the team had to maintain.
+    tags: [backend, data]
+    priority: 1
+
+  - text: >-
+      Built a location API that proxied and cached Google Maps requests, with
+      fallback logic through HERE when the primary provider failed.
+    tags: [backend, api]
+    priority: 1
+
+  - text: >-
+      Contributed to “hasty”, an internal Go package and template that gave the team
+      a fast path to scaffolding new services.
+    tags: [backend]
+    priority: 2
+
+  - text: >-
+      Triaged outages and handled customer escalations as an on-call engineer.
+    tags: [ops]
+    priority: 2

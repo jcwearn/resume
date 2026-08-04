@@ -27,6 +27,21 @@ make watch        # rebuild on save
 make clean
 ```
 
+## CI
+
+- **`build.yaml`** — runs on every PR: builds all variants, fails if any exceeds `MAX_PAGES`,
+  uploads the PDFs as a run artifact.
+- **`publish.yaml`** — runs on push to `main`: rebuilds and commits `out/*.pdf` if they changed, so
+  the committed PDFs always match the YAML.
+
+Builds are reproducible. The Makefile pins `SOURCE_DATE_EPOCH` to the last commit touching
+`content/`, `templates/`, or `render.py`, so the same inputs always produce byte-identical PDFs —
+locally and in CI alike. Without that, XeTeX's embedded timestamp would make every rebuild differ,
+`publish.yaml` would commit on every run, and its own commit would re-trigger it in a loop.
+
+Practically: run `make` before committing if you want, but you don't have to. CI will rebuild and
+commit the PDFs itself, and it won't create a diff unless the content actually changed.
+
 ## Adding a job
 
 Drop a new file in `content/experience/`. Filenames don't matter and there are no numeric prefixes —
@@ -45,6 +60,10 @@ bullets:
     tags: [backend, api]
     priority: 1
 ```
+
+Write bullet text in plain prose. Unicode punctuation (`—`, `·`, `–`, `“ ”`) is converted to portable
+LaTeX automatically, and every LaTeX special character is escaped for you. Use curly quotes rather
+than `"` — TeX renders both halves of a straight pair as closing quotes.
 
 ### Bullet priority
 
@@ -76,7 +95,11 @@ exclude_tags: []                    # rarely needed
 ```
 
 `emphasize` reorders rather than filters, so a bullet never silently vanishes because of a missing
-tag. To add a variant, drop in a new file — `make all` picks it up automatically.
+tag. Priority still dominates the ordering — emphasis only breaks ties *within* a priority tier, so
+a variant can't float a minor bullet above the work that carries the role. If you want frontend
+bullets leading the fullstack variant, raise their priority rather than leaning on `emphasize`.
+
+To add a variant, drop in a new file — `make all` picks it up automatically.
 
 Optionally override the summary per variant by adding a matching key under `summary_variants` in
 `content/profile.yaml`.
@@ -109,6 +132,13 @@ way.
 Fonts, margins, and spacing live at the top of `templates/resume.cls`. The default is Latin Modern,
 which ships with every TeX distribution and needs no download; the class header documents how to
 swap it.
+
+Spacing is deliberately loose — `\headerskip`, `\entryskip`, `\bulletsep`, and `\linespread` are the
+knobs. A resume gets skimmed before it gets read, so whitespace between blocks buys more than an
+extra bullet does. Tightening them fits more content; loosening them costs content. That tradeoff is
+what bullet priority is for: write everything, then let `max_bullets` and `max_priority` decide what
+survives at a given density. If a spacing change pushes past two pages, `make check` fails rather
+than letting it ship.
 
 The template is deliberately ATS-safe: single column, real selectable text, no icon fonts, and no
 layout built from multi-column boxes. Verify with `make ats`, which dumps the extracted text in

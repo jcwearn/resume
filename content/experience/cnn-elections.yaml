@@ -1,0 +1,33 @@
+company: CNN
+title: Senior Software Engineer
+subtitle: Elections Team
+location: Atlanta, GA
+start: 2017-12
+end: 2020-12
+max_bullets: 3
+
+bullets:
+  - text: >-
+      Member of the Elections Technology team that earned an Emmy for Election Night
+      in America.
+    tags: [leadership]
+    priority: 1
+
+  - text: >-
+      Replaced a legacy Java/Scala platform with a Node.js microservice architecture,
+      and built a RabbitMQ-based messaging system to ingest live voter data.
+    tags: [backend, data, migration]
+    priority: 1
+
+  - text: >-
+      Created and maintained internal React and Redux tooling that let producers,
+      operators, and the CNN Political Unit push graphics on air and make real-time
+      calls on election trends.
+    tags: [frontend, fullstack]
+    priority: 2
+
+  - text: >-
+      Supported live on-air election coverage using Datadog and related monitoring
+      tooling.
+    tags: [ops]
+    priority: 3

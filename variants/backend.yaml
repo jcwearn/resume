@@ -1,0 +1,6 @@
+label: Backend
+# Leads with backend, API, and infrastructure work. Frontend bullets aren't
+# excluded — just sorted last, so they fall off naturally under max_bullets.
+max_priority: 2
+emphasize: [backend, api, data, devops, k8s]
+exclude_tags: []

@@ -1,0 +1,24 @@
+groups:
+  - label: Languages
+    text: Go, Python, JavaScript, TypeScript, Node.js, PHP, SQL, Bash
+
+  - label: Backend
+    text: >-
+      REST API design, microservices, Kafka, RabbitMQ, PostgreSQL, MySQL, Redis,
+      DynamoDB, OpenSearch, Athena & Glue
+
+  - label: Infrastructure
+    text: >-
+      Kubernetes (k3s), Docker, FluxCD & GitOps, Helm, Ansible, CloudFormation,
+      AWS, GCP, Envoy, Nginx
+
+  - label: Observability
+    text: Prometheus, Grafana, Datadog, New Relic, CloudWatch, incident response & RCA
+
+  - label: Frontend
+    text: React, Redux, TypeScript, Playwright
+
+  - label: Practice
+    text: >-
+      Feature-flagged rollouts, CI/CD, end-to-end test automation, on-call, technical
+      specification authoring

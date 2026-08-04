@@ -1,0 +1,34 @@
+heading: Infrastructure & Projects
+name: Self-Hosted Kubernetes Platform
+meta: Personal infrastructure
+max_bullets: 3
+
+bullets:
+  - text: >-
+      Operate a 3-node high-availability k3s cluster running roughly 25 self-hosted
+      services, managed entirely through GitOps — every change is a pull request that
+      FluxCD reconciles to cluster state.
+    tags: [devops, k8s]
+    priority: 1
+
+  - text: >-
+      Built the platform layer: Gateway API ingress via Envoy, automated TLS through
+      cert-manager and Let's Encrypt DNS-01, DNS records synced to Cloudflare by
+      external-dns, an HA control-plane VIP via kube-vip, a PostgreSQL operator, and
+      NFS-backed persistent storage.
+    tags: [devops, k8s, backend]
+    priority: 1
+
+  - text: >-
+      Run the operational stack: Prometheus and Grafana monitoring, uptime checks,
+      SOPS/age-encrypted secrets committed safely to Git, a Tailscale overlay for
+      private access, and an in-cluster Renovate bot that opens dependency update PRs
+      automatically.
+    tags: [devops, k8s, ops]
+    priority: 2
+
+  - text: >-
+      Built the pipeline that produces this resume — YAML content compiled to LaTeX,
+      emitting role-targeted variants from a single source of truth.
+    tags: [devops, backend]
+    priority: 3

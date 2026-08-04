@@ -1,0 +1,90 @@
+company: Intuit Mailchimp
+title: Senior Software Engineer
+subtitle: Mobile Backend · Landing Pages & Surveys · Email 2
+location: Atlanta, GA
+start: 2024-06
+end: 2026-07
+# Covers three teams over two years, so it carries more bullets than the
+# roles below it. Lower this to tighten the resume.
+max_bullets: 8
+
+bullets:
+  - text: >-
+      Architected and delivered the backend for AI-enhanced audience imports:
+      integrated a preprocessing service into the Imports API, added metadata-based
+      column mapping across the start, column-mapping, and example-data endpoints,
+      and built an asynchronous job runner that fed user corrections back into the
+      model for retraining.
+    tags: [backend, api, ai]
+    priority: 1
+
+  - text: >-
+      Modernized the file import pipeline with XLSX support, server-side file-size
+      enforcement on cloud-stored uploads, and a new PATCH endpoint — shipped behind
+      feature flags with fallback to the legacy flow for zero-disruption rollout.
+    tags: [backend, api]
+    priority: 1
+
+  - text: >-
+      Migrated anomaly detection off Data Service Fabric onto AISLE and surfaced
+      industry data on the mobile API root response, modernizing the data path
+      behind the iOS and Android apps.
+    tags: [backend, api, data, migration]
+    priority: 1
+
+  - text: >-
+      Expanded Playwright end-to-end coverage across critical account-management
+      flows — signup, forgot username, and forgot password — and fixed IP-throttling
+      middleware that caused intermittent 429s, stabilizing a chronically flaky test
+      pipeline.
+    tags: [backend, testing]
+    priority: 1
+
+  - text: >-
+      Led the formal root cause analysis for a production incident, then drove the
+      resulting end-to-end testing initiative across the Mobile team, turning a
+      postmortem into a durable change in how the team shipped.
+    tags: [leadership, testing, ops]
+    priority: 1
+
+  - text: >-
+      Took ownership of an under-maintained internal service, adding logging,
+      alerting, and documentation, and authored migration specifications for two
+      services moving onto Intuit's internal service platform — including standing
+      up the team's project, local development environment, and demo resources.
+    tags: [backend, devops, migration, leadership]
+    priority: 2
+
+  - text: >-
+      Built campaign shortcut and resend APIs powering mobile reporting, letting
+      users trace resends back to their original campaign and track sends
+      attributed to the client app.
+    tags: [backend, api]
+    priority: 3
+
+  - text: >-
+      On Landing Pages & Surveys, retired legacy billing endpoints, upgraded the
+      service stack from AWS SDK v2 to v3, and integrated landing pages into forms
+      listings so published pages were no longer hard to find.
+    tags: [backend, fullstack, api]
+    priority: 2
+
+  - text: >-
+      Drove release management for the next-generation email editor and contributed
+      to the migration parity effort between the legacy and rebuilt editing
+      experiences.
+    tags: [frontend, fullstack, leadership]
+    priority: 2
+
+  - text: >-
+      Delivered omnichannel messaging support on mobile: SMS and WhatsApp delivery
+      statuses in outreach reports, push notification triggers for sent SMS
+      campaigns, and send-limit enforcement for accounts on free trials.
+    tags: [backend, api]
+    priority: 3
+
+  - text: >-
+      Led a product rebrand spanning six CRM repositories and their UIs, coordinating
+      a feature-flagged rollout with localization across seven locales.
+    tags: [fullstack, frontend, leadership]
+    priority: 3
