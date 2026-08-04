@@ -1,0 +1,61 @@
+name: Build resume
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Pinned to match the local toolchain so CI and a laptop build byte-identical
+  # output. Bump deliberately.
+  TECTONIC_VERSION: "0.17.0"
+
+jobs:
+  build:
+    name: Build and verify all variants
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install uv
+        # Pinned exactly: setup-uv stopped publishing a floating major tag after v7.
+        uses: astral-sh/setup-uv@v9.0.0
+        with:
+          enable-cache: true
+
+      # Tectonic fetches LaTeX packages on demand; without this every run
+      # re-downloads the same bundle.
+      - name: Restore Tectonic package cache
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/Tectonic
+          key: tectonic-${{ env.TECTONIC_VERSION }}-${{ hashFiles('templates/resume.cls') }}
+          restore-keys: tectonic-${{ env.TECTONIC_VERSION }}-
+
+      - name: Install Tectonic
+        run: |
+          set -euo pipefail
+          url="https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VERSION}/tectonic-${TECTONIC_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          curl -fsSL --retry 3 -o tectonic.tar.gz "$url"
+          tar -xzf tectonic.tar.gz
+          sudo install -m 755 tectonic /usr/local/bin/tectonic
+          rm -f tectonic tectonic.tar.gz
+          tectonic --version
+
+      # `make check` builds every variant in variants/ and fails if any exceeds
+      # MAX_PAGES, so a content edit that silently spills onto a third page
+      # breaks the build rather than shipping.
+      - name: Build and check page counts
+        run: make check
+
+      - name: Upload PDFs
+        uses: actions/upload-artifact@v7
+        with:
+          name: resume-pdfs
+          path: out/*.pdf
+          if-no-files-found: error
