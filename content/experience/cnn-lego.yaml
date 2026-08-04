@@ -1,0 +1,19 @@
+company: CNN
+title: Senior Software Engineer
+subtitle: Lego Team
+location: Atlanta, GA
+start: 2021-01
+end: 2021-07
+max_bullets: 3
+
+bullets:
+  - text: >-
+      Built an AWS serverless API used to register and expose internal services.
+    tags: [backend, api]
+    priority: 1
+
+  - text: >-
+      Organized AWS resources with CloudFormation and designed a CI/CD pipeline that
+      simplified deployment and rollback.
+    tags: [devops, backend]
+    priority: 1

@@ -1,0 +1,34 @@
+company: Terminus
+title: Senior Software Engineer
+subtitle: Data Services Team
+location: Atlanta, GA
+start: 2021-07
+end: 2022-08
+max_bullets: 5
+
+bullets:
+  - text: >-
+      Implemented features and bug fixes across Go-based data services.
+    tags: [backend, data]
+    priority: 1
+
+  - text: >-
+      Migrated legacy visitor data using AWS Athena and Glue.
+    tags: [backend, data]
+    priority: 1
+
+  - text: >-
+      Improved monitoring and alerting for data services using Datadog.
+    tags: [ops, devops]
+    priority: 2
+
+  - text: >-
+      Extended a TypeScript visitor-tracking script to support new event types.
+    tags: [frontend]
+    priority: 2
+
+  - text: >-
+      Diagnosed and resolved customer issues as the Customer Centric Engineering
+      delegate for the Data Services team.
+    tags: [ops]
+    priority: 2

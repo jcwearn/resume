@@ -1,0 +1,5 @@
+label: Default
+# The canonical resume: everything at priority 1-2, in authored order.
+max_priority: 2
+emphasize: []
+exclude_tags: []

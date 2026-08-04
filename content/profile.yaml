@@ -1,0 +1,27 @@
+name: Jackson Wearn
+location: Atlanta, GA
+email: jobs@wearn.dev
+
+# Rendered right-aligned in the header, one row per inner list.
+link_lines:
+  - - label: linkedin.com/in/jackson-wearn
+      url: https://linkedin.com/in/jackson-wearn
+    - label: github.com/jcwearn
+      url: https://github.com/jcwearn
+  - - label: jacksonwearn.com
+      url: https://jacksonwearn.com
+
+summary: >-
+  Backend engineer with 10+ years building and operating high-scale APIs and
+  distributed systems across marketing, logistics, and live broadcast. Comfortable
+  owning a feature end to end — from data model and API design through rollout,
+  monitoring, and incident response — with working depth in fullstack delivery and
+  Kubernetes-based infrastructure.
+
+# Optional per-variant overrides, keyed by variant name.
+summary_variants:
+  fullstack: >-
+    Software engineer with 10+ years shipping across the stack — high-scale backend
+    APIs and distributed systems, plus the React and TypeScript frontends that sit on
+    top of them. Comfortable owning a feature end to end, from data model and API
+    design through rollout, monitoring, and incident response.

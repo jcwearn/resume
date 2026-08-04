@@ -1,0 +1,6 @@
+label: Fullstack
+# Surfaces the frontend and product-facing work that the backend variant buries,
+# and reaches down to priority 3 to pick up UI bullets worth showing here.
+max_priority: 3
+emphasize: [fullstack, frontend, api, backend]
+exclude_tags: []

@@ -76,7 +76,11 @@ exclude_tags: []                    # rarely needed
 ```
 
 `emphasize` reorders rather than filters, so a bullet never silently vanishes because of a missing
-tag. To add a variant, drop in a new file — `make all` picks it up automatically.
+tag. Priority still dominates the ordering — emphasis only breaks ties *within* a priority tier, so
+a variant can't float a minor bullet above the work that carries the role. If you want frontend
+bullets leading the fullstack variant, raise their priority rather than leaning on `emphasize`.
+
+To add a variant, drop in a new file — `make all` picks it up automatically.
 
 Optionally override the summary per variant by adding a matching key under `summary_variants` in
 `content/profile.yaml`.
