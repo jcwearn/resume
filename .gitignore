@@ -1,0 +1,15 @@
+# Source material: salary, performance reviews, Jira exports. Never commit.
+private/
+
+# Build intermediates
+build/
+
+# Python
+.venv/
+__pycache__/
+
+# LaTeX droppings
+*.aux
+*.log
+*.out
+*.synctex.gz
