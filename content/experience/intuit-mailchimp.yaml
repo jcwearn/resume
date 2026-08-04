@@ -6,7 +6,7 @@ start: 2024-06
 end: 2026-07
 # Covers three teams over two years, so it carries more bullets than the
 # roles below it. Lower this to tighten the resume.
-max_bullets: 9
+max_bullets: 8
 
 bullets:
   - text: >-
@@ -60,7 +60,7 @@ bullets:
       users trace resends back to their original campaign and track sends
       attributed to the client app.
     tags: [backend, api]
-    priority: 2
+    priority: 3
 
   - text: >-
       On Landing Pages & Surveys, retired legacy billing endpoints, upgraded the

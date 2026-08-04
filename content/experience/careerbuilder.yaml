@@ -6,7 +6,7 @@ location: Norcross, GA
 # is noted in the last bullet rather than split into its own entry.
 start: 2016-01
 end: 2017-12
-max_bullets: 5
+max_bullets: 3
 
 bullets:
   - text: >-
@@ -32,10 +32,10 @@ bullets:
       Implemented and monitored a recommendations A/B test that improved distribution
       of job applications and page views.
     tags: [fullstack, data]
-    priority: 2
+    priority: 3
 
   - text: >-
       Joined as a software engineering intern (May–Dec 2015), maintaining the
       internal graphical interface to the visitor tracking API suite.
     tags: [fullstack]
-    priority: 2
+    priority: 3

@@ -36,10 +36,20 @@
 % ---------------------------------------------------------------------------
 % Layout
 % ---------------------------------------------------------------------------
+% Spacing is deliberately loose. A resume is skimmed, not read, so whitespace
+% between blocks does more for legibility than fitting another bullet in.
+% Content is trimmed via bullet priority to pay for it -- see README.
 \newcommand{\sectionrulewidth}{0.6pt}
-\newcommand{\entryskip}{0.55em}     % space between jobs
+\newcommand{\headerskip}{1.2em}     % header block -> summary
+\newcommand{\summaryskip}{0.4em}    % summary -> first section
+\newcommand{\entryskip}{1.0em}      % space between jobs
+\newcommand{\entryheadskip}{0.3em}  % entry header -> its bullets
 \newcommand{\bulletindent}{1.1em}
-\newcommand{\bulletsep}{0.12em}     % space between bullets
+\newcommand{\bulletsep}{0.3em}      % space between bullets
+
+% A touch more leading than the 10pt default; the single biggest readability
+% win in a dense document.
+\linespread{1.06}\selectfont
 % An entry header won't start unless this much room is left on the page, so a
 % job title never strands itself at the foot of a page above its bullets.
 \newcommand{\entrykeep}{4\baselineskip}
@@ -48,7 +58,7 @@
 \titleformat{\section}
   {\normalsize\bfseries}{}{0em}{\MakeUppercase}
   [\vspace{-0.55em}\rule{\textwidth}{\sectionrulewidth}]
-\titlespacing*{\section}{0pt}{0.85em}{0.45em}
+\titlespacing*{\section}{0pt}{1.5em}{0.7em}
 
 % ---------------------------------------------------------------------------
 % Macros
@@ -65,7 +75,7 @@
   \begin{minipage}[t]{0.56\textwidth}%
     \vspace{0pt}\raggedleft\small #2%
   \end{minipage}%
-  \par\vspace{0.5em}%
+  \par\vspace{\headerskip}%
 }
 
 % \resumeentry{title}{organization}{subtitle}{dates and location}
@@ -80,7 +90,7 @@
   \notblank{#3}{{\small\itshape #3}\hfill{\small #4}\par}%
              {\hfill{\small #4}\par}%
   \nobreak
-  \vspace{0.12em}%
+  \vspace{\entryheadskip}%
 }
 
 % \projectentry{name}{meta}
@@ -90,7 +100,7 @@
   \nobreak
   {\bfseries #1}\hfill{\small #2}\par
   \nobreak
-  \vspace{0.12em}%
+  \vspace{\entryheadskip}%
 }
 
 \newlist{bullets}{itemize}{1}
@@ -99,7 +109,7 @@
   labelsep=0.45em,
   itemsep=\bulletsep,
   parsep=0pt,
-  topsep=0.15em,
+  topsep=0pt,
   partopsep=0pt,
   label=\textbullet,
 }
@@ -114,8 +124,8 @@
   labelwidth=8.5em,
   labelsep=0.3em,
   font=\bfseries\small,
-  itemsep=0.18em,
-  topsep=0.1em,
+  itemsep=0.35em,
+  topsep=0.2em,
   parsep=0pt,
   partopsep=0pt,
 }

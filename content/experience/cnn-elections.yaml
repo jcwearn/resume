@@ -4,7 +4,7 @@ subtitle: Elections Team
 location: Atlanta, GA
 start: 2017-12
 end: 2020-12
-max_bullets: 4
+max_bullets: 3
 
 bullets:
   - text: >-
@@ -30,4 +30,4 @@ bullets:
       Supported live on-air election coverage using Datadog and related monitoring
       tooling.
     tags: [ops]
-    priority: 2
+    priority: 3

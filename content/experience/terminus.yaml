@@ -4,7 +4,7 @@ subtitle: Data Services Team
 location: Atlanta, GA
 start: 2021-07
 end: 2022-08
-max_bullets: 5
+max_bullets: 4
 
 bullets:
   - text: >-
@@ -31,4 +31,4 @@ bullets:
       Diagnosed and resolved customer issues as the Customer Centric Engineering
       delegate for the Data Services team.
     tags: [ops]
-    priority: 2
+    priority: 3

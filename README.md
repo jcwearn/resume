@@ -133,6 +133,13 @@ Fonts, margins, and spacing live at the top of `templates/resume.cls`. The defau
 which ships with every TeX distribution and needs no download; the class header documents how to
 swap it.
 
+Spacing is deliberately loose — `\headerskip`, `\entryskip`, `\bulletsep`, and `\linespread` are the
+knobs. A resume gets skimmed before it gets read, so whitespace between blocks buys more than an
+extra bullet does. Tightening them fits more content; loosening them costs content. That tradeoff is
+what bullet priority is for: write everything, then let `max_bullets` and `max_priority` decide what
+survives at a given density. If a spacing change pushes past two pages, `make check` fails rather
+than letting it ship.
+
 The template is deliberately ATS-safe: single column, real selectable text, no icon fonts, and no
 layout built from multi-column boxes. Verify with `make ats`, which dumps the extracted text in
 reading order.

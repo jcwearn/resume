@@ -1,7 +1,7 @@
 heading: Infrastructure & Projects
 name: Self-Hosted Kubernetes Platform
 meta: Personal infrastructure
-max_bullets: 4
+max_bullets: 3
 
 bullets:
   - text: >-
@@ -31,4 +31,4 @@ bullets:
       Built the pipeline that produces this resume — YAML content compiled to LaTeX,
       emitting role-targeted variants from a single source of truth.
     tags: [devops, backend]
-    priority: 2
+    priority: 3
