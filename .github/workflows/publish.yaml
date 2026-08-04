@@ -1,0 +1,75 @@
+name: Publish resume
+
+# Rebuilds on main and commits the PDFs back, so out/ is always the resume the
+# YAML currently describes.
+#
+# This is only safe because the build is reproducible: the Makefile pins
+# SOURCE_DATE_EPOCH to the last commit touching a build input, so rebuilding
+# unchanged content yields byte-identical PDFs and produces no commit. Without
+# that, every run would commit a new timestamp and re-trigger itself.
+on:
+  push:
+    branches: [main]
+    # Second guard: this job's own commit touches only out/, so it cannot
+    # re-trigger the workflow even if a build ever became non-deterministic.
+    paths-ignore:
+      - "out/**"
+  workflow_dispatch:
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  TECTONIC_VERSION: "0.17.0"
+
+jobs:
+  publish:
+    name: Build and commit PDFs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # SOURCE_DATE_EPOCH comes from `git log`, which needs real history.
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v9.0.0
+        with:
+          enable-cache: true
+
+      - name: Restore Tectonic package cache
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/Tectonic
+          key: tectonic-${{ env.TECTONIC_VERSION }}-${{ hashFiles('templates/resume.cls') }}
+          restore-keys: tectonic-${{ env.TECTONIC_VERSION }}-
+
+      - name: Install Tectonic
+        run: |
+          set -euo pipefail
+          url="https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VERSION}/tectonic-${TECTONIC_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          curl -fsSL --retry 3 -o tectonic.tar.gz "$url"
+          tar -xzf tectonic.tar.gz
+          sudo install -m 755 tectonic /usr/local/bin/tectonic
+          rm -f tectonic tectonic.tar.gz
+          tectonic --version
+
+      - name: Build and check page counts
+        run: make check
+
+      - name: Commit PDFs if changed
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- out; then
+            echo "PDFs already match the source; nothing to publish."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add out
+          git commit -m "chore: rebuild resume PDFs [skip ci]"
+          git push
+          echo "Published rebuilt PDFs."

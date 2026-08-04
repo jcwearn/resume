@@ -1,8 +1,9 @@
 name: Build resume
 
+# Pre-merge gate only. Pushes to main are handled by publish.yaml, which runs
+# the same `make check` before committing PDFs, so duplicating it here would
+# just burn minutes.
 on:
-  push:
-    branches: [main]
   pull_request:
   workflow_dispatch:
 

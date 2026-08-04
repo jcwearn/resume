@@ -27,6 +27,21 @@ make watch        # rebuild on save
 make clean
 ```
 
+## CI
+
+- **`build.yaml`** — runs on every PR: builds all variants, fails if any exceeds `MAX_PAGES`,
+  uploads the PDFs as a run artifact.
+- **`publish.yaml`** — runs on push to `main`: rebuilds and commits `out/*.pdf` if they changed, so
+  the committed PDFs always match the YAML.
+
+Builds are reproducible. The Makefile pins `SOURCE_DATE_EPOCH` to the last commit touching
+`content/`, `templates/`, or `render.py`, so the same inputs always produce byte-identical PDFs —
+locally and in CI alike. Without that, XeTeX's embedded timestamp would make every rebuild differ,
+`publish.yaml` would commit on every run, and its own commit would re-trigger it in a loop.
+
+Practically: run `make` before committing if you want, but you don't have to. CI will rebuild and
+commit the PDFs itself, and it won't create a diff unless the content actually changed.
+
 ## Adding a job
 
 Drop a new file in `content/experience/`. Filenames don't matter and there are no numeric prefixes —

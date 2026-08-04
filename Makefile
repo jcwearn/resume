@@ -7,6 +7,17 @@ NAME      := jackson-wearn-resume
 PY        := uv run --quiet python
 VARIANTS  := $(sort $(notdir $(basename $(wildcard variants/*.yaml))))
 
+# XeTeX stamps a creation date into the PDF, so an unpinned build is never
+# byte-identical twice. Pinning SOURCE_DATE_EPOCH to the last commit that
+# touched a build input makes output reproducible: the PDF changes only when
+# something it's derived from changes. That's what lets CI commit rebuilt PDFs
+# without looping, and what keeps a local `make` from producing a spurious diff.
+# Falls back to a fixed epoch outside a git checkout (git exits 0 with empty
+# output there, so a shell `||` would not catch it).
+GIT_EPOCH := $(shell git log -1 --format=%ct -- content templates render.py 2>/dev/null)
+SOURCE_DATE_EPOCH ?= $(or $(GIT_EPOCH),1700000000)
+export SOURCE_DATE_EPOCH
+
 # The default variant is the canonical resume, so it keeps the bare filename.
 SUFFIX    := $(if $(filter default,$(VARIANT)),,-$(VARIANT))
 OUTFILE   := out/$(NAME)$(SUFFIX).pdf
