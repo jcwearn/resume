@@ -2,9 +2,8 @@ company: CareerBuilder
 title: Software Engineer I–II
 subtitle: Job UX & Services · Consumer Intelligence
 location: Norcross, GA
-# TODO(jackson): confirm the internship range. The previous resume listed it as
-# "May 2015 – December 2016", which overlaps Software Engineer I (Jan–Dec 2016);
-# assuming May–Dec 2015 here.
+# Dates cover the full-time roles; the May–Dec 2015 internship that preceded them
+# is noted in the last bullet rather than split into its own entry.
 start: 2016-01
 end: 2017-12
 max_bullets: 5
@@ -36,7 +35,7 @@ bullets:
     priority: 2
 
   - text: >-
-      Began as a software engineering intern (2015), maintaining the internal
-      graphical interface to the visitor tracking API suite.
+      Joined as a software engineering intern (May–Dec 2015), maintaining the
+      internal graphical interface to the visitor tracking API suite.
     tags: [fullstack]
     priority: 2

@@ -46,6 +46,10 @@ bullets:
     priority: 1
 ```
 
+Write bullet text in plain prose. Unicode punctuation (`—`, `·`, `–`, `“ ”`) is converted to portable
+LaTeX automatically, and every LaTeX special character is escaped for you. Use curly quotes rather
+than `"` — TeX renders both halves of a straight pair as closing quotes.
+
 ### Bullet priority
 
 | priority | meaning |
