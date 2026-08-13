@@ -13,7 +13,7 @@ groups:
       AWS, GCP, Envoy, Nginx
 
   - label: Observability
-    text: Prometheus, Grafana, Datadog, New Relic, CloudWatch, incident response & RCA
+    text: Prometheus, Grafana, Datadog, New Relic, CloudWatch
 
   - label: Frontend
     text: React, Redux, TypeScript, Playwright
