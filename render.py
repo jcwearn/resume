@@ -13,6 +13,7 @@ intentionally hold LaTeX or a URL opt out with the `raw` filter.
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import shutil
 import sys
@@ -211,7 +212,13 @@ def build_env() -> Environment:
     return env
 
 
-def render(variant_name: str, out_dir: Path) -> Path:
+def build_context(variant_name: str) -> dict:
+    """Load the content and apply a variant's filtering.
+
+    The single source of what a variant actually says, shared by every output
+    format. Anything derived from it -- LaTeX, JSON -- gets the same bullets in
+    the same order, so the PDF and the website cannot drift apart.
+    """
     variant_path = VARIANTS / f"{variant_name}.yaml"
     if not variant_path.exists():
         available = ", ".join(sorted(p.stem for p in VARIANTS.glob("*.yaml")))
@@ -232,22 +239,71 @@ def render(variant_name: str, out_dir: Path) -> Path:
 
     apply_variant(experience, projects, variant)
 
+    return {
+        "profile": profile,
+        "experience": experience,
+        "projects": projects,
+        "skills": skills,
+        "education": education,
+        "variant": variant,
+    }
+
+
+def render(variant_name: str, out_dir: Path) -> Path:
+    context = build_context(variant_name)
+
     out_dir.mkdir(parents=True, exist_ok=True)
     # The class file has to sit beside the .tex so the build dir is self-contained.
     shutil.copy2(TEMPLATES / "resume.cls", out_dir / "resume.cls")
 
     template = build_env().get_template("resume.tex.j2")
-    tex = template.render(
-        profile=profile,
-        experience=experience,
-        projects=projects,
-        skills=skills,
-        education=education,
-        variant=variant,
-    )
+    tex = template.render(**context)
 
     target = out_dir / f"resume-{variant_name}.tex"
     target.write_text(tex, encoding="utf-8")
+    return target
+
+
+# --------------------------------------------------------------------------
+# JSON output
+# --------------------------------------------------------------------------
+
+def render_json(variant_name: str, target: Path) -> Path:
+    """Write the same filtered content as JSON, for consumers that are not LaTeX.
+
+    jacksonwearn.com renders its resume page from this, so the site shows real
+    selectable HTML rather than an embedded PDF viewer, without reimplementing
+    the variant rules or reading the PDF back.
+
+    Nothing here is LaTeX-escaped: escaping belongs to the LaTeX finalizer, and
+    a JSON consumer wants the original text. Dates arrive already formatted as
+    `dates` on each entry, and the raw start/end are kept so a consumer can
+    sort or reformat without parsing "Jun 2024 – Jul 2026".
+    """
+    context = build_context(variant_name)
+
+    # _sort is an internal tuple used only to order entries here.
+    experience = [{k: v for k, v in entry.items() if k != "_sort"} for entry in context["experience"]]
+
+    # summary is already resolved for this variant, so shipping every other
+    # variant's summary alongside it is noise a consumer could pick the wrong
+    # one from.
+    profile = {k: v for k, v in context["profile"].items() if k != "summary_variants"}
+
+    payload = {
+        "variant": context["variant"].get("name", variant_name),
+        "profile": profile,
+        "experience": experience,
+        "projects": context["projects"],
+        "skills": context["skills"],
+        "education": context["education"],
+    }
+
+    target.parent.mkdir(parents=True, exist_ok=True)
+    # sort_keys=False keeps authored order; ensure_ascii=False keeps the em
+    # dashes and middots readable rather than escaping them.
+    text = json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=False, default=str)
+    target.write_text(text + "\n", encoding="utf-8")
     return target
 
 
@@ -255,10 +311,23 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--variant", default="default")
     parser.add_argument("--out", type=Path, default=ROOT / "build")
+    parser.add_argument(
+        "--json",
+        type=Path,
+        metavar="PATH",
+        help="write the filtered content as JSON to PATH instead of rendering LaTeX",
+    )
     args = parser.parse_args()
 
-    target = render(args.variant, args.out)
-    print(f"rendered {target.relative_to(ROOT)}")
+    if args.json:
+        target = render_json(args.variant, args.json)
+    else:
+        target = render(args.variant, args.out)
+
+    # --json takes an arbitrary path, which may sit outside the repo.
+    resolved = target.resolve()
+    shown = resolved.relative_to(ROOT) if resolved.is_relative_to(ROOT) else resolved
+    print(f"rendered {shown}")
     return 0
 
 
