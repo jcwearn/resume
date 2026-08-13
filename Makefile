@@ -21,8 +21,9 @@ export SOURCE_DATE_EPOCH
 # The default variant is the canonical resume, so it keeps the bare filename.
 SUFFIX    := $(if $(filter default,$(VARIANT)),,-$(VARIANT))
 OUTFILE   := out/$(NAME)$(SUFFIX).pdf
+JSONFILE  := out/resume.json
 
-.PHONY: resume all check ats watch clean help
+.PHONY: resume all json check ats watch clean help
 
 resume:
 	@$(PY) render.py --variant $(VARIANT)
@@ -35,9 +36,18 @@ resume:
 all:
 	@for v in $(VARIANTS); do $(MAKE) --no-print-directory resume VARIANT=$$v || exit 1; done
 
+# The same filtered content as the PDF, for consumers that are not LaTeX.
+# jacksonwearn.com renders its resume page from this, so the site shows real
+# HTML instead of an embedded PDF viewer. Only the default variant is
+# published: it is the canonical resume, and the others exist for tailoring
+# applications, not for the website.
+json:
+	@$(PY) render.py --variant default --json $(JSONFILE)
+	@echo "built $(JSONFILE)"
+
 # Page count comes from the LastPage label the lastpage package writes into the
 # .aux, so this needs no PDF tooling beyond what already built the document.
-check: all
+check: all json
 	@fail=0; \
 	for v in $(VARIANTS); do \
 		pages=$$(sed -n 's/.*newlabel{LastPage}{{}*{\([0-9][0-9]*\)}.*/\1/p' build/resume-$$v.aux | tail -1); \
@@ -69,6 +79,7 @@ clean:
 help:
 	@echo "make [VARIANT=$(VARIANT)]  build one variant -> $(OUTFILE)"
 	@echo "make all                   build every variant: $(VARIANTS)"
+	@echo "make json                  write $(JSONFILE) for the website"
 	@echo "make check                 fail if any variant exceeds $(MAX_PAGES) pages"
 	@echo "make ats                   dump extracted text in reading order"
 	@echo "make watch                 rebuild on save"

@@ -22,7 +22,8 @@ install to manage. `uv` handles the Python venv automatically — no activation 
 make              # default variant -> out/jackson-wearn-resume.pdf
 make VARIANT=backend
 make all          # every variant in variants/
-make check        # fail if any variant exceeds MAX_PAGES (default 2)
+make json         # out/resume.json, the content the website renders from
+make check        # build everything and fail if a variant exceeds MAX_PAGES (default 2)
 make watch        # rebuild on save
 make clean
 ```

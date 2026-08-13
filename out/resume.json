@@ -1,0 +1,379 @@
+{
+  "variant": "default",
+  "profile": {
+    "name": "Jackson Wearn",
+    "location": "Atlanta, GA",
+    "email": "jobs@wearn.dev",
+    "link_lines": [
+      [
+        {
+          "label": "linkedin.com/in/jackson-wearn",
+          "url": "https://linkedin.com/in/jackson-wearn"
+        },
+        {
+          "label": "github.com/jcwearn",
+          "url": "https://github.com/jcwearn"
+        }
+      ],
+      [
+        {
+          "label": "jacksonwearn.com",
+          "url": "https://jacksonwearn.com"
+        }
+      ]
+    ],
+    "summary": "Backend engineer with 10+ years building and operating high-scale APIs and distributed systems across marketing, logistics, and live broadcast. Comfortable owning a feature end to end — from data model and API design through rollout, monitoring, and incident response — with working depth in fullstack delivery and Kubernetes-based infrastructure."
+  },
+  "experience": [
+    {
+      "company": "Intuit Mailchimp",
+      "title": "Senior Software Engineer",
+      "subtitle": "Mobile Backend · Landing Pages & Surveys · Email 2",
+      "location": "Atlanta, GA",
+      "start": "2024-06",
+      "end": "2026-07",
+      "max_bullets": 8,
+      "bullets": [
+        {
+          "text": "Architected and delivered the backend for AI-enhanced audience imports: integrated a preprocessing service into the Imports API, added metadata-based column mapping across the start, column-mapping, and example-data endpoints, and built an asynchronous job runner that fed user corrections back into the model for retraining.",
+          "tags": [
+            "backend",
+            "api",
+            "ai"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Modernized the file import pipeline with XLSX support, server-side file-size enforcement on cloud-stored uploads, and a new PATCH endpoint — shipped behind feature flags with fallback to the legacy flow for zero-disruption rollout.",
+          "tags": [
+            "backend",
+            "api"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Migrated anomaly detection off Data Service Fabric onto AISLE and surfaced industry data on the mobile API root response, modernizing the data path behind the iOS and Android apps.",
+          "tags": [
+            "backend",
+            "api",
+            "data",
+            "migration"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Expanded Playwright end-to-end coverage across critical account-management flows — signup, forgot username, and forgot password — and fixed IP-throttling middleware that caused intermittent 429s, stabilizing a chronically flaky test pipeline.",
+          "tags": [
+            "backend",
+            "testing"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Led the formal root cause analysis for a production incident, then drove the resulting end-to-end testing initiative across the Mobile team, turning a postmortem into a durable change in how the team shipped.",
+          "tags": [
+            "leadership",
+            "testing",
+            "ops"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Took ownership of an under-maintained internal service, adding logging, alerting, and documentation, and authored migration specifications for two services moving onto Intuit's internal service platform — including standing up the team's project, local development environment, and demo resources.",
+          "tags": [
+            "backend",
+            "devops",
+            "migration",
+            "leadership"
+          ],
+          "priority": 2
+        },
+        {
+          "text": "On Landing Pages & Surveys, retired legacy billing endpoints, upgraded the service stack from AWS SDK v2 to v3, and integrated landing pages into forms listings so published pages were no longer hard to find.",
+          "tags": [
+            "backend",
+            "fullstack",
+            "api"
+          ],
+          "priority": 2
+        },
+        {
+          "text": "Drove release management for the next-generation email editor and contributed to the migration parity effort between the legacy and rebuilt editing experiences.",
+          "tags": [
+            "frontend",
+            "fullstack",
+            "leadership"
+          ],
+          "priority": 2
+        }
+      ],
+      "dates": "Jun 2024 – Jul 2026"
+    },
+    {
+      "company": "Roadie",
+      "title": "Senior Software Engineer",
+      "subtitle": "Sender / Geo Team",
+      "location": "Atlanta, GA",
+      "start": "2022-09",
+      "end": "2024-05",
+      "max_bullets": 5,
+      "bullets": [
+        {
+          "text": "Built a pipeline ingesting Kafka messages and persisting them to AWS OpenSearch.",
+          "tags": [
+            "backend",
+            "data"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Replaced a legacy tracking API with Benthos, an off-the-shelf Go stream processor, cutting the surface area the team had to maintain.",
+          "tags": [
+            "backend",
+            "data"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Built a location API that proxied and cached Google Maps requests, with fallback logic through HERE when the primary provider failed.",
+          "tags": [
+            "backend",
+            "api"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Contributed to “hasty”, an internal Go package and template that gave the team a fast path to scaffolding new services.",
+          "tags": [
+            "backend"
+          ],
+          "priority": 2
+        },
+        {
+          "text": "Triaged outages and handled customer escalations as an on-call engineer.",
+          "tags": [
+            "ops"
+          ],
+          "priority": 2
+        }
+      ],
+      "dates": "Sep 2022 – May 2024"
+    },
+    {
+      "company": "Terminus",
+      "title": "Senior Software Engineer",
+      "subtitle": "Data Services Team",
+      "location": "Atlanta, GA",
+      "start": "2021-07",
+      "end": "2022-08",
+      "max_bullets": 4,
+      "bullets": [
+        {
+          "text": "Implemented features and bug fixes across Go-based data services.",
+          "tags": [
+            "backend",
+            "data"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Migrated legacy visitor data using AWS Athena and Glue.",
+          "tags": [
+            "backend",
+            "data"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Improved monitoring and alerting for data services using Datadog.",
+          "tags": [
+            "ops",
+            "devops"
+          ],
+          "priority": 2
+        },
+        {
+          "text": "Extended a TypeScript visitor-tracking script to support new event types.",
+          "tags": [
+            "frontend"
+          ],
+          "priority": 2
+        }
+      ],
+      "dates": "Jul 2021 – Aug 2022"
+    },
+    {
+      "company": "CNN",
+      "title": "Senior Software Engineer",
+      "subtitle": "Lego Team",
+      "location": "Atlanta, GA",
+      "start": "2021-01",
+      "end": "2021-07",
+      "max_bullets": 3,
+      "bullets": [
+        {
+          "text": "Built an AWS serverless API used to register and expose internal services.",
+          "tags": [
+            "backend",
+            "api"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Organized AWS resources with CloudFormation and designed a CI/CD pipeline that simplified deployment and rollback.",
+          "tags": [
+            "devops",
+            "backend"
+          ],
+          "priority": 1
+        }
+      ],
+      "dates": "Jan 2021 – Jul 2021"
+    },
+    {
+      "company": "CNN",
+      "title": "Senior Software Engineer",
+      "subtitle": "Elections Team",
+      "location": "Atlanta, GA",
+      "start": "2017-12",
+      "end": "2020-12",
+      "max_bullets": 3,
+      "bullets": [
+        {
+          "text": "Member of the Elections Technology team that earned an Emmy for Election Night in America.",
+          "tags": [
+            "leadership"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Replaced a legacy Java/Scala platform with a Node.js microservice architecture, and built a RabbitMQ-based messaging system to ingest live voter data.",
+          "tags": [
+            "backend",
+            "data",
+            "migration"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Created and maintained internal React and Redux tooling that let producers, operators, and the CNN Political Unit push graphics on air and make real-time calls on election trends.",
+          "tags": [
+            "frontend",
+            "fullstack"
+          ],
+          "priority": 2
+        }
+      ],
+      "dates": "Dec 2017 – Dec 2020"
+    },
+    {
+      "company": "CareerBuilder",
+      "title": "Software Engineer I–II",
+      "subtitle": "Job UX & Services · Consumer Intelligence",
+      "location": "Norcross, GA",
+      "start": "2016-01",
+      "end": "2017-12",
+      "max_bullets": 3,
+      "bullets": [
+        {
+          "text": "Developed and maintained Node.js microservice APIs, persisting large volumes of tracking data across DynamoDB, MySQL, and PostgreSQL.",
+          "tags": [
+            "backend",
+            "data",
+            "api"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Integrated Google's private job search API into CareerBuilder's existing search pages, and built a front-end caching layer for Business Intelligence data.",
+          "tags": [
+            "backend",
+            "fullstack",
+            "api"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Instrumented monitoring and alerting across New Relic, Datadog, and CloudWatch, added a dead letter queue for failed calls in the internal job feeding engine, and built a repeatable deployment process with AWS CodeDeploy.",
+          "tags": [
+            "devops",
+            "ops",
+            "backend"
+          ],
+          "priority": 2
+        }
+      ],
+      "dates": "Jan 2016 – Dec 2017"
+    }
+  ],
+  "projects": {
+    "heading": "Infrastructure & Projects",
+    "name": "Self-Hosted Kubernetes Platform",
+    "meta": "Personal infrastructure",
+    "max_bullets": 3,
+    "bullets": [
+      {
+        "text": "Operate a 3-node high-availability k3s cluster running roughly 25 self-hosted services, managed entirely through GitOps — every change is a pull request that FluxCD reconciles to cluster state.",
+        "tags": [
+          "devops",
+          "k8s"
+        ],
+        "priority": 1
+      },
+      {
+        "text": "Built the platform layer: Gateway API ingress via Envoy, automated TLS through cert-manager and Let's Encrypt DNS-01, DNS records synced to Cloudflare by external-dns, an HA control-plane VIP via kube-vip, a PostgreSQL operator, and NFS-backed persistent storage.",
+        "tags": [
+          "devops",
+          "k8s",
+          "backend"
+        ],
+        "priority": 1
+      },
+      {
+        "text": "Run the operational stack: Prometheus and Grafana monitoring, uptime checks, SOPS/age-encrypted secrets committed safely to Git, a Tailscale overlay for private access, and an in-cluster Renovate bot that opens dependency update PRs automatically.",
+        "tags": [
+          "devops",
+          "k8s",
+          "ops"
+        ],
+        "priority": 2
+      }
+    ]
+  },
+  "skills": {
+    "groups": [
+      {
+        "label": "Languages",
+        "text": "Go, Python, JavaScript, TypeScript, Node.js, PHP, SQL, Bash"
+      },
+      {
+        "label": "Backend",
+        "text": "REST API design, microservices, Kafka, RabbitMQ, PostgreSQL, MySQL, Redis, DynamoDB, OpenSearch, Athena & Glue"
+      },
+      {
+        "label": "Infrastructure",
+        "text": "Kubernetes (k3s), Docker, FluxCD & GitOps, Helm, Ansible, CloudFormation, AWS, GCP, Envoy, Nginx"
+      },
+      {
+        "label": "Observability",
+        "text": "Prometheus, Grafana, Datadog, New Relic, CloudWatch"
+      },
+      {
+        "label": "Frontend",
+        "text": "React, Redux, TypeScript, Playwright"
+      },
+      {
+        "label": "Practice",
+        "text": "Feature-flagged rollouts, CI/CD, end-to-end test automation, on-call, technical specification authoring"
+      }
+    ]
+  },
+  "education": {
+    "entries": [
+      {
+        "degree": "B.Sc. Computer Science, University of Georgia",
+        "detail": "2011–2015"
+      }
+    ]
+  }
+}
