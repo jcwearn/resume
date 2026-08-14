@@ -105,6 +105,40 @@ To add a variant, drop in a new file — `make all` picks it up automatically.
 Optionally override the summary per variant by adding a matching key under `summary_variants` in
 `content/profile.yaml`.
 
+## Cover letters
+
+Letters run through the same pipeline — YAML in, LaTeX out, no template editing:
+
+```sh
+make letter LETTER=acme        # private/letters/acme.yaml -> private/out/
+make letters                   # every letter in private/letters/
+```
+
+```yaml
+# private/letters/acme.yaml
+company: Acme Corp
+role: Staff Software Engineer
+date: September 1, 2026     # optional, free text; omit to drop the line
+salutation: Acme Team       # optional, defaults to "Hiring Team"
+closing: Sincerely          # optional
+paragraphs:
+  - >-
+    First paragraph.
+  - >-
+    Second paragraph.
+```
+
+`company` and `role` render as a `Re:` line, so the role can't go stale in the prose without
+showing. Name, contacts, and links are **not** repeated here — they come from
+`content/profile.yaml`, and the letter reuses the resume's `\resumeheader`, fonts, and margins, so
+the two documents can't drift apart visually. `make letter` fails past `MAX_LETTER_PAGES` (default
+1) the same way `make check` guards the resume.
+
+**Letters live in gitignored `private/`, and that is deliberate.** This repo is public and
+`publish.yaml` commits build output back to `main` — committing letters would publish which
+companies you applied to. Only the machinery is tracked; the letters and their PDFs are not, so CI
+never builds them and `make check` deliberately leaves them alone.
+
 ## Layout
 
 ```
@@ -117,16 +151,19 @@ content/
 variants/*.yaml
 templates/
   resume.cls             # document class: fonts, spacing, macros
-  resume.tex.j2          # document body
+  resume.tex.j2          # resume body
+  letter.tex.j2          # cover letter body
 render.py
 out/                     # committed PDFs
 build/                   # gitignored intermediates
 private/                 # gitignored source material
+  letters/*.yaml         # cover letter content
+  out/                   # cover letter PDFs
 ```
 
 `private/` holds the Jira export, performance reviews, and employment verification letter used to
-write the bullets. It is gitignored because it contains salary and review content — keep it that
-way.
+write the bullets, plus the cover letters. It is gitignored because it contains salary and review
+content — keep it that way.
 
 ## Styling
 
