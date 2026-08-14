@@ -1,11 +1,11 @@
 groups:
   - label: Languages
-    text: Go, Python, JavaScript, TypeScript, Node.js, PHP, SQL, Bash
+    text: Go, Python, JavaScript, TypeScript, Node.js, PHP, Ruby, SQL, Bash
 
   - label: Backend
     text: >-
       REST API design, microservices, Kafka, RabbitMQ, PostgreSQL, MySQL, Redis,
-      DynamoDB, OpenSearch, Athena & Glue
+      DynamoDB, OpenSearch
 
   - label: Infrastructure
     text: >-
