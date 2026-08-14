@@ -1,10 +1,12 @@
 company: CNN
 title: Senior Software Engineer
-subtitle: Elections Team
+subtitle: Elections · Lego
 location: Atlanta, GA
+# Two teams across three and a half years, merged into one entry the way the
+# CareerBuilder and Mailchimp entries handle multiple teams.
 start: 2017-12
-end: 2020-12
-max_bullets: 3
+end: 2021-07
+max_bullets: 5
 
 bullets:
   - text: >-
@@ -17,6 +19,17 @@ bullets:
       Replaced a legacy Java/Scala platform with a Node.js microservice architecture,
       and built a RabbitMQ-based messaging system to ingest live voter data.
     tags: [backend, data, migration]
+    priority: 1
+
+  - text: >-
+      Built an AWS serverless API used to register and expose internal services.
+    tags: [backend, api]
+    priority: 1
+
+  - text: >-
+      Organized AWS resources with CloudFormation and designed a CI/CD pipeline that
+      simplified deployment and rollback.
+    tags: [devops, backend]
     priority: 1
 
   - text: >-
