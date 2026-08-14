@@ -205,39 +205,11 @@
     {
       "company": "CNN",
       "title": "Senior Software Engineer",
-      "subtitle": "Lego Team",
-      "location": "Atlanta, GA",
-      "start": "2021-01",
-      "end": "2021-07",
-      "max_bullets": 3,
-      "bullets": [
-        {
-          "text": "Built an AWS serverless API used to register and expose internal services.",
-          "tags": [
-            "backend",
-            "api"
-          ],
-          "priority": 1
-        },
-        {
-          "text": "Organized AWS resources with CloudFormation and designed a CI/CD pipeline that simplified deployment and rollback.",
-          "tags": [
-            "devops",
-            "backend"
-          ],
-          "priority": 1
-        }
-      ],
-      "dates": "Jan 2021 – Jul 2021"
-    },
-    {
-      "company": "CNN",
-      "title": "Senior Software Engineer",
-      "subtitle": "Elections Team",
+      "subtitle": "Elections · Lego",
       "location": "Atlanta, GA",
       "start": "2017-12",
-      "end": "2020-12",
-      "max_bullets": 3,
+      "end": "2021-07",
+      "max_bullets": 5,
       "bullets": [
         {
           "text": "Member of the Elections Technology team that earned an Emmy for Election Night in America.",
@@ -256,6 +228,22 @@
           "priority": 1
         },
         {
+          "text": "Built an AWS serverless API used to register and expose internal services.",
+          "tags": [
+            "backend",
+            "api"
+          ],
+          "priority": 1
+        },
+        {
+          "text": "Organized AWS resources with CloudFormation and designed a CI/CD pipeline that simplified deployment and rollback.",
+          "tags": [
+            "devops",
+            "backend"
+          ],
+          "priority": 1
+        },
+        {
           "text": "Created and maintained internal React and Redux tooling that let producers, operators, and the CNN Political Unit push graphics on air and make real-time calls on election trends.",
           "tags": [
             "frontend",
@@ -264,7 +252,7 @@
           "priority": 2
         }
       ],
-      "dates": "Dec 2017 – Dec 2020"
+      "dates": "Dec 2017 – Jul 2021"
     },
     {
       "company": "CareerBuilder",
