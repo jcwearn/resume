@@ -8,6 +8,9 @@ delimiters (\\VAR{...}, \\BLOCK{...}) so braces don't collide with LaTeX itself.
 
 Every string reaching the template is LaTeX-escaped by default. Fields that
 intentionally hold LaTeX or a URL opt out with the `raw` filter.
+
+Cover letters go through the same machinery via --letter, sharing the escaping,
+the template environment, and profile.yaml's header.
 """
 
 from __future__ import annotations
@@ -28,6 +31,8 @@ VARIANTS = ROOT / "variants"
 TEMPLATES = ROOT / "templates"
 
 DEFAULT_PRIORITY = 2
+DEFAULT_SALUTATION = "Hiring Team"
+DEFAULT_CLOSING = "Sincerely"
 MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -265,6 +270,50 @@ def render(variant_name: str, out_dir: Path) -> Path:
 
 
 # --------------------------------------------------------------------------
+# Cover letters
+# --------------------------------------------------------------------------
+
+def build_letter_context(letter_path: Path) -> dict:
+    """Load one letter alongside the profile it shares a header with.
+
+    The letter YAML carries only what is specific to an application -- company,
+    role, prose. Name, location, email, and links come from profile.yaml, so a
+    letter's header cannot drift from the resume's.
+    """
+    if not letter_path.exists():
+        raise SystemExit(f"no such letter: {letter_path}")
+
+    letter = load_yaml(letter_path)
+    for field in ("company", "role", "paragraphs"):
+        if field not in letter:
+            raise SystemExit(f"{letter_path}: missing required field '{field}'")
+    if not letter["paragraphs"]:
+        raise SystemExit(f"{letter_path}: 'paragraphs' is empty")
+
+    letter.setdefault("name", letter_path.stem)
+    letter.setdefault("salutation", DEFAULT_SALUTATION)
+    letter.setdefault("closing", DEFAULT_CLOSING)
+    letter.setdefault("date", None)
+
+    return {"profile": load_yaml(CONTENT / "profile.yaml"), "letter": letter}
+
+
+def render_letter(letter_path: Path, out_dir: Path) -> Path:
+    context = build_letter_context(letter_path)
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    # Same reason as render(): the class has to sit beside the .tex.
+    shutil.copy2(TEMPLATES / "resume.cls", out_dir / "resume.cls")
+
+    template = build_env().get_template("letter.tex.j2")
+    tex = template.render(**context)
+
+    target = out_dir / f"letter-{letter_path.stem}.tex"
+    target.write_text(tex, encoding="utf-8")
+    return target
+
+
+# --------------------------------------------------------------------------
 # JSON output
 # --------------------------------------------------------------------------
 
@@ -311,16 +360,29 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--variant", default="default")
     parser.add_argument("--out", type=Path, default=ROOT / "build")
-    parser.add_argument(
+    # Neither of these renders the resume template, so asking for both is a
+    # request for two different documents in one run.
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument(
         "--json",
         type=Path,
         metavar="PATH",
         help="write the filtered content as JSON to PATH instead of rendering LaTeX",
     )
+    # A path rather than a slug: letters live outside the repo tree by design,
+    # so the renderer shouldn't assume where. See README.
+    mode.add_argument(
+        "--letter",
+        type=Path,
+        metavar="PATH",
+        help="render the cover letter at PATH instead of the resume",
+    )
     args = parser.parse_args()
 
     if args.json:
         target = render_json(args.variant, args.json)
+    elif args.letter:
+        target = render_letter(args.letter, args.out)
     else:
         target = render(args.variant, args.out)
 

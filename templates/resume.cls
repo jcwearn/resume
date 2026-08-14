@@ -1,5 +1,9 @@
 % ===========================================================================
-% resume.cls -- single-column, ATS-safe resume class.
+% resume.cls -- single-column, ATS-safe class for this repo's documents.
+%
+% Serves both resume.tex.j2 and letter.tex.j2. A cover letter shares the
+% resume's fonts, margins, and header macro so the two read as one set of
+% documents; the only letter-specific piece is the letterbody environment.
 %
 % Style knobs live in the "Layout" block below. Everything under "Macros" is
 % plumbing the template calls into; you shouldn't need to touch it.
@@ -46,6 +50,8 @@
 \newcommand{\entryheadskip}{0.3em}  % entry header -> its bullets
 \newcommand{\bulletindent}{1.1em}
 \newcommand{\bulletsep}{0.3em}      % space between bullets
+\newcommand{\lettersep}{0.8em}      % space between letter paragraphs
+\newcommand{\lettersignskip}{2.2em} % closing -> signature name
 
 % A touch more leading than the 10pt default; the single biggest readability
 % win in a dense document.
@@ -132,3 +138,9 @@
 
 % A single free-standing line (education, etc.)
 \newcommand{\plainline}[2]{{\bfseries #1}\hfill{\small #2}\par}
+
+% Letter prose. The class sets \parskip=0pt, which is right for a resume --
+% its blocks are separated by explicit skips -- and wrong for running text,
+% where consecutive paragraphs would otherwise run together with no indent to
+% tell them apart. Scoped to the environment so the resume is unaffected.
+\newenvironment{letterbody}{\par\setlength{\parskip}{\lettersep}}{\par}
