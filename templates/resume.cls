@@ -46,7 +46,7 @@
 \newcommand{\sectionrulewidth}{0.6pt}
 \newcommand{\headerskip}{1.2em}     % header block -> summary
 \newcommand{\summaryskip}{0.4em}    % summary -> first section
-\newcommand{\entryskip}{1.0em}      % space between jobs
+\newcommand{\entryskip}{1.4em}      % space between jobs
 \newcommand{\entryheadskip}{0.3em}  % entry header -> its bullets
 \newcommand{\bulletindent}{1.1em}
 \newcommand{\bulletsep}{0.3em}      % space between bullets
