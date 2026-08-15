@@ -7,3 +7,21 @@ dependencies = [
     "jinja2>=3.1",
     "pyyaml>=6.0",
 ]
+
+# Pinned exactly, because CI runs whatever is written here. A ruff release that
+# newly flags this code should arrive as a Renovate PR you can read, not as a
+# red run on somebody else's schedule. ruff is held at the same version as
+# withjoy-exporter so the two Python repos bump together.
+[dependency-groups]
+dev = [
+    "pytest==9.1.1",
+    "ruff==0.16.3",
+]
+
+[tool.pytest.ini_options]
+# uv.lock records this project as `source = { virtual = "." }`, so uv never
+# installs it and render.py is not importable from site-packages. Without this,
+# pytest's prepend import mode puts tests/ on sys.path but not the repo root,
+# and `import render` fails.
+pythonpath = ["."]
+testpaths = ["tests"]

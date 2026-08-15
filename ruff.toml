@@ -1,0 +1,14 @@
+# Ruff config lives here rather than in pyproject.toml on purpose: a [tool.ruff]
+# block there invites tooling to treat this project as installable, and uv.lock
+# deliberately records it as `source = { virtual = "." }`. render.py is a script
+# the Makefile runs, not a package anyone imports.
+
+# The .tex templates are Jinja2 with LaTeX-safe delimiters, and out/ holds
+# committed build output. Neither is Python, but excluding build/ keeps a stray
+# generated .py from ever being linted as source.
+exclude = ["build", "out", "private"]
+
+[lint]
+# Left at ruff's default for this first adoption -- wider than
+# ["E4","E7","E9","F"] already -- to be widened one rule family at a time once
+# the baseline is clean.
