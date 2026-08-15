@@ -30,20 +30,26 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           # SOURCE_DATE_EPOCH comes from `git log`, which needs real history.
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v9.0.0
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
         with:
           enable-cache: true
 
+      # See build.yaml: Tectonic's cache location is platform-dependent, and
+      # pinning it is what makes the cache step below actually save anything.
+      # This job runs on main, so its cache is the one every PR restores from.
+      - name: Pin the Tectonic cache location
+        run: echo "TECTONIC_CACHE_DIR=$HOME/.cache/tectonic" >> "$GITHUB_ENV"
+
       - name: Restore Tectonic package cache
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
-          path: ~/.cache/Tectonic
+          path: ${{ env.TECTONIC_CACHE_DIR }}
           key: tectonic-${{ env.TECTONIC_VERSION }}-${{ hashFiles('templates/resume.cls') }}
           restore-keys: tectonic-${{ env.TECTONIC_VERSION }}-
 
@@ -57,8 +63,17 @@ jobs:
           rm -f tectonic tectonic.tar.gz
           tectonic --version
 
+      # Retried for the same reason as build.yaml: a cold Tectonic cache means
+      # hundreds of CDN fetches, and one transient failure kills the run.
       - name: Build and check page counts
-        run: make check
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3; do
+            if make check; then exit 0; fi
+            echo "make check failed (attempt $attempt/3)"
+            if [ "$attempt" -lt 3 ]; then sleep 15; fi
+          done
+          exit 1
 
       - name: Commit build output if changed
         run: |
