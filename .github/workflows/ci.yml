@@ -1,0 +1,36 @@
+name: CI
+
+# Calls the shared Python CI workflow in jcwearn/workflows: ruff check, ruff
+# format --check, pytest. Until now nothing in this repo looked at render.py as
+# code -- build.yaml and publish.yaml compile the LaTeX and fail past MAX_PAGES,
+# which catches a layout overflow and nothing else.
+#
+# This repo installs with uv, so it takes python-ci.yaml's uv path. Nothing here
+# selects that: committing uv.lock is what selects it, the same way committing
+# .python-version selects the interpreter.
+#
+# Deliberately no `concurrency:` block. The shared workflow declares its own
+# group, and a second one for the same logical run means the outer holds a slot
+# while the inner queues behind it.
+#
+# build.yaml and publish.yaml stay exactly as they are. A Tectonic build is not
+# a Python CI step, so on a pull request this job now runs *alongside* them
+# rather than extending either one.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  ci:
+    # Explicit even though `read` is all python-ci needs and all this account
+    # grants by default. A reusable workflow can only narrow what the caller
+    # granted, so the grant belongs here where it is visible.
+    permissions:
+      contents: read
+    # Renovate pins this to a digest on its next run, leaving `# v1` behind as
+    # the record of what to follow. Written as `@v1` with no trailing comment;
+    # the comment belongs on a digest, where it records which tag it came from.
+    uses: jcwearn/workflows/.github/workflows/python-ci.yaml@v1

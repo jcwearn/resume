@@ -30,10 +30,21 @@ make clean
 
 ## CI
 
+- **`ci.yml`** — runs on every PR and every push to `main`: `ruff check`, `ruff format --check`,
+  `pytest`. Thin caller for the shared [`python-ci.yaml`][workflows] every one of my Python repos
+  uses; the tool versions are this repo's, pinned in `[dependency-groups] dev`.
 - **`build.yaml`** — runs on every PR: builds all variants, fails if any exceeds `MAX_PAGES`,
   uploads the PDFs as a run artifact.
 - **`publish.yaml`** — runs on push to `main`: rebuilds and commits `out/*.pdf` if they changed, so
   the committed PDFs always match the YAML.
+
+The Tectonic workflows stay local rather than folding into the shared one — an image build isn't
+a Python CI step — so on a PR the two run in parallel. They answer different questions: `ci.yml`
+asks whether `render.py` is correct, `build.yaml` asks whether the result fits on two pages.
+
+[workflows]: https://github.com/jcwearn/workflows
+
+Run the same checks locally with `uv run ruff check . && uv run ruff format --check . && uv run pytest`.
 
 Builds are reproducible. The Makefile pins `SOURCE_DATE_EPOCH` to the last commit touching
 `content/`, `templates/`, or `render.py`, so the same inputs always produce byte-identical PDFs —

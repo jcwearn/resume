@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Render resume content (YAML) into a LaTeX document.
 
 Content lives in content/, presentation lives in templates/. This script is the
@@ -33,13 +32,26 @@ TEMPLATES = ROOT / "templates"
 DEFAULT_PRIORITY = 2
 DEFAULT_SALUTATION = "Hiring Team"
 DEFAULT_CLOSING = "Sincerely"
-MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+MONTHS = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+]
 
 
 # --------------------------------------------------------------------------
 # LaTeX escaping
 # --------------------------------------------------------------------------
+
 
 class Raw(str):
     """A string the finalizer leaves alone."""
@@ -62,17 +74,17 @@ _SPECIAL = {
 # pure ASCII and compiles under any engine.
 _UNICODE = {
     "·": r"\textperiodcentered{}",  # ·
-    "–": "--",                      # –
-    "—": "---",                     # —
-    "→": r"$\rightarrow$",          # →
-    "←": r"$\leftarrow$",           # ←
-    "≤": r"$\leq$",                 # ≤
-    "≥": r"$\geq$",                 # ≥
+    "–": "--",  # –
+    "—": "---",  # —
+    "→": r"$\rightarrow$",  # →
+    "←": r"$\leftarrow$",  # ←
+    "≤": r"$\leq$",  # ≤
+    "≥": r"$\geq$",  # ≥
     "‘": "`",
     "’": "'",
     "“": "``",
     "”": "''",
-    "…": r"\ldots{}",               # …
+    "…": r"\ldots{}",  # …
     " ": "~",
 }
 
@@ -96,6 +108,7 @@ def finalize(value):
 # --------------------------------------------------------------------------
 # Content loading
 # --------------------------------------------------------------------------
+
 
 def load_yaml(path: Path) -> dict:
     with path.open(encoding="utf-8") as fh:
@@ -148,6 +161,7 @@ def load_experience() -> list[dict]:
 # Variant filtering
 # --------------------------------------------------------------------------
 
+
 def select_bullets(bullets: list[dict], variant: dict, cap: int | None) -> list[dict]:
     max_priority = variant.get("max_priority", DEFAULT_PRIORITY)
     exclude = set(variant.get("exclude_tags") or [])
@@ -196,6 +210,7 @@ def apply_variant(experience: list[dict], projects: dict, variant: dict) -> None
 # --------------------------------------------------------------------------
 # Rendering
 # --------------------------------------------------------------------------
+
 
 def build_env() -> Environment:
     env = Environment(
@@ -273,6 +288,7 @@ def render(variant_name: str, out_dir: Path) -> Path:
 # Cover letters
 # --------------------------------------------------------------------------
 
+
 def build_letter_context(letter_path: Path) -> dict:
     """Load one letter alongside the profile it shares a header with.
 
@@ -317,6 +333,7 @@ def render_letter(letter_path: Path, out_dir: Path) -> Path:
 # JSON output
 # --------------------------------------------------------------------------
 
+
 def render_json(variant_name: str, target: Path) -> Path:
     """Write the same filtered content as JSON, for consumers that are not LaTeX.
 
@@ -332,7 +349,10 @@ def render_json(variant_name: str, target: Path) -> Path:
     context = build_context(variant_name)
 
     # _sort is an internal tuple used only to order entries here.
-    experience = [{k: v for k, v in entry.items() if k != "_sort"} for entry in context["experience"]]
+    experience = [
+        {k: v for k, v in entry.items() if k != "_sort"}
+        for entry in context["experience"]
+    ]
 
     # summary is already resolved for this variant, so shipping every other
     # variant's summary alongside it is noise a consumer could pick the wrong
@@ -351,7 +371,9 @@ def render_json(variant_name: str, target: Path) -> Path:
     target.parent.mkdir(parents=True, exist_ok=True)
     # sort_keys=False keeps authored order; ensure_ascii=False keeps the em
     # dashes and middots readable rather than escaping them.
-    text = json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=False, default=str)
+    text = json.dumps(
+        payload, indent=2, ensure_ascii=False, sort_keys=False, default=str
+    )
     target.write_text(text + "\n", encoding="utf-8")
     return target
 
