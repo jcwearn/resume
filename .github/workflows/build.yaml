@@ -21,20 +21,28 @@ jobs:
     name: Build and verify all variants
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Install uv
         # Pinned exactly: setup-uv stopped publishing a floating major tag after v7.
-        uses: astral-sh/setup-uv@v9.0.0
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
         with:
           enable-cache: true
+
+      # Tectonic's cache location is platform-dependent, and the hardcoded path
+      # this used to cache was the wrong one on the runner: the cache step
+      # silently saved nothing and every run re-downloaded the whole bundle.
+      # Pinning the directory here and reading it back below keeps the cache
+      # step and the build from drifting apart again.
+      - name: Pin the Tectonic cache location
+        run: echo "TECTONIC_CACHE_DIR=$HOME/.cache/tectonic" >> "$GITHUB_ENV"
 
       # Tectonic fetches LaTeX packages on demand; without this every run
       # re-downloads the same bundle.
       - name: Restore Tectonic package cache
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
-          path: ~/.cache/Tectonic
+          path: ${{ env.TECTONIC_CACHE_DIR }}
           key: tectonic-${{ env.TECTONIC_VERSION }}-${{ hashFiles('templates/resume.cls') }}
           restore-keys: tectonic-${{ env.TECTONIC_VERSION }}-
 
@@ -51,11 +59,23 @@ jobs:
       # `make check` builds every variant in variants/ and fails if any exceeds
       # MAX_PAGES, so a content edit that silently spills onto a third page
       # breaks the build rather than shipping.
+      #
+      # Retried because a cold cache pulls hundreds of files from the Tectonic
+      # bundle CDN, and its own retries are ~0.5s apart -- too tight to ride out
+      # a blip, which has failed this job before. A real page-count failure
+      # costs three attempts; that's a minute, and it stays red either way.
       - name: Build and check page counts
-        run: make check
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3; do
+            if make check; then exit 0; fi
+            echo "make check failed (attempt $attempt/3)"
+            if [ "$attempt" -lt 3 ]; then sleep 15; fi
+          done
+          exit 1
 
       - name: Upload PDFs
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: resume-pdfs
           path: out/*.pdf
