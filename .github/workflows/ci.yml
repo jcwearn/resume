@@ -30,18 +30,7 @@ jobs:
     # granted, so the grant belongs here where it is visible.
     permissions:
       contents: read
-    # >>> TEMPORARY -- REVERT BEFORE MERGE <<<
-    #
-    # Pinned to the head of jcwearn/workflows#14, which is the PR adding the uv
-    # install path this repo needs. `@v1` currently resolves to v1.3.2, which
-    # has no uv path and would die at `pip install -r requirements-dev.txt`.
-    #
-    # Once #14 merges and self-release moves v1 to v1.4.0, revert this commit.
-    # The line below it is the one that should ship.
-    uses: jcwearn/workflows/.github/workflows/python-ci.yaml@6862f513a77002d702411963ec22627e9e0f5ff0 # jcwearn/workflows#14
-    #
     # Renovate pins this to a digest on its next run, leaving `# v1` behind as
     # the record of what to follow. Written as `@v1` with no trailing comment;
     # the comment belongs on a digest, where it records which tag it came from.
-    #
-    # uses: jcwearn/workflows/.github/workflows/python-ci.yaml@v1
+    uses: jcwearn/workflows/.github/workflows/python-ci.yaml@v1
