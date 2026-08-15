@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Render resume content (YAML) into a LaTeX document.
 
 Content lives in content/, presentation lives in templates/. This script is the
