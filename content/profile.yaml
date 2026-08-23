@@ -20,6 +20,13 @@ summary: >-
 
 # Optional per-variant overrides, keyed by variant name.
 summary_variants:
+  dataplatform: >-
+    Backend engineer with 10+ years building and operating the systems that move data —
+    Kafka and RabbitMQ ingest pipelines, Go stream processors, and the high-scale APIs
+    that serve what they land. Comfortable owning a pipeline end to end, from data model
+    and API design through rollout, monitoring, on-call, and incident response, with
+    working depth in Kubernetes-based infrastructure.
+
   fullstack: >-
     Software engineer with 10+ years shipping across the stack — high-scale backend
     APIs and distributed systems, plus the React and TypeScript frontends that sit on

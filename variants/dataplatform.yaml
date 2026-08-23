@@ -1,0 +1,8 @@
+label: Data Platform
+# For data platform / streaming roles: leads with pipeline and data-movement
+# work, then the APIs on top of it, then the operational side. Frontend and
+# product bullets aren't excluded, just sorted last, so they fall off under
+# max_bullets.
+max_priority: 2
+emphasize: [data, backend, api, ops, devops]
+exclude_tags: []
