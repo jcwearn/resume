@@ -4,7 +4,7 @@ Resume content lives in YAML. A small renderer feeds it through a Jinja2 LaTeX t
 Tectonic compiles the PDF. Adding a job means writing ~15 lines of YAML — you never touch LaTeX.
 
 ```
-content/*.yaml  ->  render.py  ->  build/resume-<variant>.tex  ->  out/*.pdf
+content/*.yaml  ->  render.py  ->  build/resume-<variant>.tex  ->  out/[<variant>/]*.pdf
 ```
 
 ## Setup
@@ -35,7 +35,7 @@ make clean
   uses; the tool versions are this repo's, pinned in `[dependency-groups] dev`.
 - **`build.yaml`** — runs on every PR: builds all variants, fails if any exceeds `MAX_PAGES`,
   uploads the PDFs as a run artifact.
-- **`publish.yaml`** — runs on push to `main`: rebuilds and commits `out/*.pdf` if they changed, so
+- **`publish.yaml`** — runs on push to `main`: rebuilds and commits `out/**/*.pdf` if they changed, so
   the committed PDFs always match the YAML.
 
 The Tectonic workflows stay local rather than folding into the shared one — an image build isn't
@@ -166,6 +166,10 @@ templates/
   letter.tex.j2          # cover letter body
 render.py
 out/                     # committed PDFs
+  resume.json            # what jacksonwearn.com renders from
+  jackson-wearn-resume.pdf     # the default variant, fetched by the website
+  <variant>/
+    jackson-wearn-resume.pdf   # same filename, one directory per variant
 build/                   # gitignored intermediates
 private/                 # gitignored source material
   letters/*.yaml         # cover letter content
