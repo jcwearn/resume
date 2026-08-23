@@ -20,6 +20,13 @@ summary: >-
 
 # Optional per-variant overrides, keyed by variant name.
 summary_variants:
+  platform: >-
+    Backend engineer with 10+ years building and operating the systems other
+    engineers deploy onto — CI/CD and rollback pipelines, Kubernetes and GitOps
+    infrastructure, monitoring and alerting, and the on-call rotations that follow.
+    Comfortable owning a service end to end, from API design through rollout,
+    incident response, and the process changes an incident should leave behind.
+
   dataplatform: >-
     Backend engineer with 10+ years building and operating the systems that move data —
     Kafka and RabbitMQ ingest pipelines, Go stream processors, and the high-scale APIs
