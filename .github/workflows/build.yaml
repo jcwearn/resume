@@ -78,5 +78,11 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: resume-pdfs
-          path: out/*.pdf
+          # Both patterns on purpose: the default variant sits at out/ root and
+          # the tailored ones in out/<variant>/. if-no-files-found only fires
+          # when nothing matches at all, so a glob that quietly caught half of
+          # them would upload an incomplete artifact and still pass.
+          path: |
+            out/*.pdf
+            out/**/*.pdf
           if-no-files-found: error

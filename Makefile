@@ -29,9 +29,19 @@ GIT_EPOCH := $(shell git log -1 --format=%ct -- content templates render.py 2>/d
 SOURCE_DATE_EPOCH ?= $(or $(GIT_EPOCH),1700000000)
 export SOURCE_DATE_EPOCH
 
-# The default variant is the canonical resume, so it keeps the bare filename.
-SUFFIX    := $(if $(filter default,$(VARIANT)),,-$(VARIANT))
-OUTFILE   := out/$(NAME)$(SUFFIX).pdf
+# Every variant writes the same filename, into its own directory, so what gets
+# attached to an application is jackson-wearn-resume.pdf no matter which variant
+# built it -- a filename shouldn't tell a recruiter the resume was tailored, or
+# which of several tailorings they got. The directory carries the distinction
+# and never leaves the repo.
+#
+# The default variant is the exception, staying at the root of out/ alongside
+# resume.json: jacksonwearn.com fetches both from fixed raw.githubusercontent
+# paths (scripts/fetch-resume.ts in jcwearn/jackson-wearn), and a missing PDF
+# there fails soft -- the site would quietly serve a stale copy forever rather
+# than error. Moving it is a cross-repo change; leaving it is free.
+OUTDIR    := $(if $(filter default,$(VARIANT)),out,out/$(VARIANT))
+OUTFILE   := $(OUTDIR)/$(NAME).pdf
 JSONFILE  := out/resume.json
 
 .PHONY: resume all json check letter letters ats watch clean help
@@ -40,7 +50,7 @@ resume:
 	@$(PY) render.py --variant $(VARIANT)
 	@tectonic -X compile build/resume-$(VARIANT).tex \
 		--outdir build --keep-intermediates --keep-logs
-	@mkdir -p out
+	@mkdir -p $(OUTDIR)
 	@cp build/resume-$(VARIANT).pdf $(OUTFILE)
 	@echo "built $(OUTFILE)"
 
@@ -117,7 +127,7 @@ clean:
 	@echo "cleaned build/ (out/ kept)"
 
 help:
-	@echo "make [VARIANT=$(VARIANT)]  build one variant -> $(OUTFILE)"
+	@echo "make [VARIANT=$(VARIANT)]  build one variant -> out/<variant>/$(NAME).pdf"
 	@echo "make all                   build every variant: $(VARIANTS)"
 	@echo "make json                  write $(JSONFILE) for the website"
 	@echo "make check                 fail if any variant exceeds $(MAX_PAGES) pages"
