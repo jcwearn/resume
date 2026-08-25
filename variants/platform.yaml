@@ -1,0 +1,10 @@
+label: Platform
+# For platform / infrastructure / SRE roles, where the operational work is the
+# job rather than the support act. Emphasis leads each entry with CI/CD,
+# GitOps, Kubernetes, and on-call, then the backend services underneath them:
+# CNN opens on the CloudFormation and CI/CD bullet, Mailchimp on the incident
+# RCA. max_priority stays at 2 -- priority dominates the sort, so admitting
+# tier 3 changes nothing under the existing max_bullets caps.
+max_priority: 2
+emphasize: [devops, k8s, ops, backend, api]
+exclude_tags: []
